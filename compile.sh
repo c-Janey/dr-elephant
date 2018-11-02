@@ -49,8 +49,8 @@ function require_programs() {
 require_programs zip unzip
 
 # Default configurations
-HADOOP_VERSION="2.3.0"
-SPARK_VERSION="1.4.0"
+HADOOP_VERSION="2.8.5"
+SPARK_VERSION="1.6.3"
 
 # User should pass an optional argument which is a path to config file
 if [ -z "$1" ];
@@ -147,7 +147,8 @@ pso_dir=${project_root}/scripts/pso
 rm -rf ${project_root}/dist
 mkdir dist
 
-play_command $OPTS clean test compile dist
+#play_command $OPTS clean test compile dist
+play_command $OPTS clean compile dist
 
 cd target/universal
 

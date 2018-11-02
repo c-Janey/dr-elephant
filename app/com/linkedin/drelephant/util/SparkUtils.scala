@@ -242,7 +242,6 @@ trait SparkUtils {
         appId = Some(name)
       }
     }  else if(nameAndExtension.length == 1) {
-      extension = None
       val name = nameAndExtension(0)
       val appIdAndAttempt = name.split('_')
       if( appIdAndAttempt.length == 4 ) {
@@ -333,7 +332,7 @@ trait SparkUtils {
           "_" + sanitize(finalAttempt._2.get) +
           "." + finalAttempt._3.get), finalAttempt._3.get)
       // if codec is not available, but we found a file match with appId, use the actual file Path from the first match
-      case nocodec if nocodec._1 != None & nocodec._3 == None => (new Path(base +
+      case nocodec if nocodec._1 != None &nocodec._2 != None & nocodec._3 == None => (new Path(base +
         "/" + nocodec._1.get +
         "_" + sanitize(finalAttempt._2.get)), DEFAULT_COMPRESSION_CODEC)
 

@@ -106,6 +106,7 @@ trait SparkUtils {
     appId: String,
     attemptId: Option[String]
   ): (Path, Option[CompressionCodec]) = {
+    logger.info(s"======method:pathAndCodecforEventLog   attemptId ${attemptId.isEmpty}======")
     val shouldUseCompression = sparkConf.getBoolean(SPARK_EVENT_LOG_COMPRESS_KEY, defaultValue = false)
     attemptId match {
       // if attemptid is given, use the existing method
@@ -308,7 +309,7 @@ trait SparkUtils {
         sortWith( (x,y) => x._2.getOrElse("-1").toInt > y._2.getOrElse("-1").toInt ).
         head
     }
-
+    logger.info(s"======method:getLogPathAndCodecName-shouldUseCompression(true)   finalAttempt ${finalAttempt._1.isEmpty} ${finalAttempt._2.isEmpty} ${finalAttempt._3.isEmpty}======")
     finalAttempt match {
       // if attemptId is none and the codec is available, use the appid with no attemptid suffix
       case noAttempt if noAttempt._1 != None & noAttempt._2 == None & noAttempt._3 != None =>

@@ -335,8 +335,7 @@ trait SparkUtils {
       // if codec is not available, but we found a file match with appId, use the actual file Path from the first match
       case nocodec if nocodec._1 != None & nocodec._3 == None => (new Path(base +
         "/" + nocodec._1.get +
-        "_" + sanitize(finalAttempt._2.get) +
-        "." + finalAttempt._3.get), DEFAULT_COMPRESSION_CODEC)
+        "_" + sanitize(finalAttempt._2.get)), DEFAULT_COMPRESSION_CODEC)
 
       // This should be reached only if we can't parse the filename in the path.
       // Try to construct a general path in that case.

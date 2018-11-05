@@ -309,7 +309,7 @@ trait SparkUtils {
       }
     }
     val attemptsList = fs.listStatus(new Path(base), filter)
-    logger.info(s"======method:getLogPathAndCodecName-shouldUseCompression(true)   attemptsList length = ${attemptsList.length}======")
+//    logger.info(s"======method:getLogPathAndCodecName-shouldUseCompression(true)   attemptsList length = ${attemptsList.length}======")
     val finalAttempt = attemptsList.length match {
       case 0 => throw new FileNotFoundException(s"logfile does not exist for ${appId}.")
       case 1 => splitLogPath(attemptsList(0).getPath().getName())
@@ -318,7 +318,7 @@ trait SparkUtils {
         sortWith( (x,y) => x._2.getOrElse("-1").toInt > y._2.getOrElse("-1").toInt ).
         head
     }
-    logger.info(s"======method:getLogPathAndCodecName-shouldUseCompression(true)   finalAttempt ${finalAttempt._1.isEmpty} ${finalAttempt._2.isEmpty} ${finalAttempt._3.isEmpty}======")
+//    logger.info(s"======method:getLogPathAndCodecName-shouldUseCompression(true)   finalAttempt ${finalAttempt._1.isEmpty} ${finalAttempt._2.isEmpty} ${finalAttempt._3.isEmpty}======")
     finalAttempt match {
       // if attemptId is none and the codec is available, use the appid with no attemptid suffix
       case noAttempt if noAttempt._1 != None & noAttempt._2 == None & noAttempt._3 != None =>

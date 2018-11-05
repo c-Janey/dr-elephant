@@ -33,6 +33,7 @@ class ReplayListenerBusV1 extends SparkListenerBus with Logging {
               maybeTruncated: Boolean = false): Unit = {
     var currentLine: String = null
     var lineNumber: Int = 1
+    var truncatedLineNumber: Int = 0
     try {
       val lines = Source.fromInputStream(logData).getLines()
       while (lines.hasNext) {
@@ -43,15 +44,18 @@ class ReplayListenerBusV1 extends SparkListenerBus with Logging {
           //spark2.x eventlog 每一行都可能被截断，所以修改下代码
           case jpe: JsonParseException =>
             // We can only ignore exception from last line of the file that might be truncated
-            if (!maybeTruncated /*|| lines.hasNext*/) {
+            /*if (!maybeTruncated || lines.hasNext) {
               throw jpe
-            } else {
+            } else {*/
               logWarning(s"Got JsonParseException from log file $sourceName" +
                 s" at line $lineNumber, the file might not have finished writing cleanly.")
-            }
+//            }
+          truncatedLineNumber += 1
         }
         lineNumber += 1
       }
+      logWarning(s"log file $sourceName" +
+        s" lineNum==$lineNumber, truncatedLineNumber==$truncatedLineNumber")
     } catch {
       case ioe: IOException =>
         throw ioe

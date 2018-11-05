@@ -17,17 +17,15 @@
 package org.apache.spark.deploy.history
 
 import java.io.InputStream
-import java.util.{Set => JSet, Properties, List => JList, HashSet => JHashSet, ArrayList => JArrayList}
+import java.util.{Properties, ArrayList => JArrayList, HashSet => JHashSet, List => JList, Set => JSet}
 
 import scala.collection.mutable
-
 import com.linkedin.drelephant.analysis.ApplicationType
 import com.linkedin.drelephant.spark.legacydata._
 import com.linkedin.drelephant.spark.legacydata.SparkExecutorData.ExecutorInfo
 import com.linkedin.drelephant.spark.legacydata.SparkJobProgressData.JobInfo
-
 import org.apache.spark.SparkConf
-import org.apache.spark.scheduler.{ApplicationEventListener, ReplayListenerBus, StageInfo}
+import org.apache.spark.scheduler.{ApplicationEventListener, ReplayListenerBus, ReplayListenerBusV1, StageInfo}
 import org.apache.spark.storage.{RDDInfo, StorageStatus, StorageStatusListener, StorageStatusTrackingListener}
 import org.apache.spark.ui.env.EnvironmentListener
 import org.apache.spark.ui.exec.ExecutorsListener
@@ -287,7 +285,7 @@ class SparkDataCollection extends SparkApplicationData {
   }
 
   def load(in: InputStream, sourceName: String): Unit = {
-    val replayBus = new ReplayListenerBus()
+    val replayBus = new ReplayListenerBusV1()
     replayBus.addListener(applicationEventListener)
     replayBus.addListener(jobProgressListener)
     replayBus.addListener(environmentListener)

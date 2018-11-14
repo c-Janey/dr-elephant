@@ -106,7 +106,7 @@ trait SparkUtils {
     appId: String,
     attemptId: Option[String]
   ): (Path, Option[CompressionCodec]) = {
-    logger.info(s"======method:pathAndCodecforEventLog   attemptId ${attemptId.isEmpty}======")
+//    logger.info(s"======method:pathAndCodecforEventLog   attemptId ${attemptId.isEmpty}======")
     val shouldUseCompression = sparkConf.getBoolean(SPARK_EVENT_LOG_COMPRESS_KEY, defaultValue = false)
     attemptId match {
       // if attemptid is given, use the existing method
@@ -265,7 +265,7 @@ trait SparkUtils {
       }
     }
     val attemptsList = fs.listStatus(new Path(base), filter)
-    logger.info(s"======method:getLogPathAndCodecName   attemptsList length = ${attemptsList.length}======")
+//    logger.info(s"======method:getLogPathAndCodecName   attemptsList length = ${attemptsList.length}======")
     val finalAttempt = attemptsList.length match {
       case 0 => throw new FileNotFoundException(s"logfile does not exist for ${appId}.")
       case 1 => splitLogPath(attemptsList(0).getPath().getName())

@@ -1,13 +1,11 @@
 package org.apache.spark.scheduler
 
-import java.io.{InputStream, IOException}
+import java.io.{IOException, InputStream}
 
 import scala.io.Source
-
 import com.fasterxml.jackson.core.JsonParseException
 import org.json4s.jackson.JsonMethods._
-
-import org.apache.spark.Logging
+import org.apache.spark.internal.Logging
 import org.apache.spark.util.JsonProtocol
 
 /**

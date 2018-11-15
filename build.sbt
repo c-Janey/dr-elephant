@@ -14,7 +14,6 @@
 // the License.
 //
 
-import play.Project._
 import Dependencies._
 
 name := "dr-elephant"
@@ -25,7 +24,12 @@ organization := "com.linkedin.drelephant"
 
 javacOptions in Compile ++= Seq("-source", "1.6", "-target", "1.6")
 
+//lazy val root = (project in file(".")).enablePlugins(PlayScala)
+
+
 libraryDependencies ++= dependencies map { _.excludeAll(exclusionRules: _*) }
+libraryDependencies ++= Seq(javaJdbc, javaEbean, cache)
+
 
 // Create a new custom configuration called compileonly
 ivyConfigurations += config("compileonly").hide
@@ -33,8 +37,10 @@ ivyConfigurations += config("compileonly").hide
 // Append all dependencies with 'compileonly' configuration to unmanagedClasspath in Compile.
 unmanagedClasspath in Compile ++= update.value.select(configurationFilter("compileonly"))
 
-playJavaSettings
+//playJavaSettings
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.8"
+
+//lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 envVars in Test := Map("PSO_DIR_PATH" -> (baseDirectory.value / "scripts/pso").getAbsolutePath)
